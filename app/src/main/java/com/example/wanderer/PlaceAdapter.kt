@@ -21,10 +21,13 @@ class PlaceAdapter(private val context: Context, private val places: List<Place>
             nameTv.text = place.name
             addressTv.text = place.rating.toString()
 
-            val photoUrl = "https://maps.googleapis.com/maps/api/place/photo?maxheight=200&key=${PLACES_KEY}&photo_reference=${place.photo?.get(0)?.photo_id}"
-            Glide.with(context)
-                .load(photoUrl)
-                .into(thumbnail)
+            val photo_id = place.photo?.get(0)?.photo_id
+            if (photo_id != null) {
+                val photoUrl = "https://maps.googleapis.com/maps/api/place/photo?maxheight=200&key=${PLACES_KEY}&photo_reference=${photo_id}"
+                Glide.with(context)
+                    .load(photoUrl)
+                    .into(thumbnail)
+            }
         }
     }
 

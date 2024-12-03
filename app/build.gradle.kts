@@ -55,6 +55,7 @@ android {
 dependencies {
     implementation ("androidx.room:room-ktx:2.4.2")
     implementation ("androidx.room:room-runtime:2.4.2")
+    implementation(libs.play.services.location)
     annotationProcessor ("androidx.room:room-compiler:2.4.2")
     kapt ("androidx.room:room-compiler:2.4.2")
     implementation ("androidx.fragment:fragment-ktx:1.5.0")
