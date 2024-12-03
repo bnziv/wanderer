@@ -14,12 +14,16 @@ data class Results(
 @Keep
 @Serializable
 data class Place(
+    @SerialName("place_id")
+    val apiId: String?,
     @SerialName("name")
     val name: String?,
     @SerialName("rating")
     val rating: Double? = null,
     @SerialName("photos")
-    val photo: List<Photo>? = null
+    val photo: List<Photo>? = null,
+    @SerialName("vicinity")
+    val address: String? = null
 ): java.io.Serializable
 
 @Keep
