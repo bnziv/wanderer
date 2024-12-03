@@ -16,6 +16,7 @@ class PlaceAdapter(private val context: Context, private val places: List<Place>
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.OnClickListener {
         private val nameTv: TextView = itemView.findViewById(R.id.placeName)
         private val addressTv: TextView = itemView.findViewById(R.id.placeAddress)
+        private val ratingTv: TextView = itemView.findViewById(R.id.placeRating)
         private val thumbnail: ImageView = itemView.findViewById(R.id.placeThumbnail)
 
         init {
@@ -24,13 +25,15 @@ class PlaceAdapter(private val context: Context, private val places: List<Place>
 
         fun bind(place: Place) {
             nameTv.text = place.name
-            addressTv.text = place.rating.toString()
+            addressTv.text = place.address
+            ratingTv.text = if (place.rating != null) place.rating.toString() else ""
 
-            val photo_id = place.photo?.get(0)?.photo_id
-            if (photo_id != null) {
-                val photoUrl = "https://maps.googleapis.com/maps/api/place/photo?maxheight=200&key=${PLACES_KEY}&photo_reference=${photo_id}"
+            val photoId = place.photo?.get(0)?.photo_id
+            if (photoId != null) {
+                val photoUrl = "https://maps.googleapis.com/maps/api/place/photo?maxheight=200&key=${PLACES_KEY}&photo_reference=${photoId}"
                 Glide.with(context)
                     .load(photoUrl)
+                    .placeholder(R.drawable.ic_launcher_foreground)
                     .into(thumbnail)
             }
         }

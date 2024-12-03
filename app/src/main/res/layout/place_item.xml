@@ -3,41 +3,45 @@
     android:layout_width="match_parent"
     android:layout_height="150dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="6dp">
 
     <TextView
         android:id="@+id/placeName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="Place Name"/>
-
-    <TextView
-        android:id="@+id/placeDesc"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/placeName"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/placeThumbnail"
-        tools:text="Place description Place description Place description Place description Place description" />
+        tools:text="Place Name"/>
 
     <TextView
         android:id="@+id/placeAddress"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/placeDesc"
+        app:layout_constraintTop_toBottomOf="@+id/placeName"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="Place address" />
+        app:layout_constraintEnd_toStartOf="@id/placeThumbnail" />
+    <TextView
+        android:id="@+id/placeRating"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/placeAddress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/placeThumbnail" />
 
     <ImageView
+        android:background="@drawable/imageview"
         android:id="@+id/placeThumbnail"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:scaleType="fitXY"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintWidth_percent="0.35"
-        app:layout_constraintHeight_percent="0.70" />
+        app:layout_constraintHeight_percent="0.90" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

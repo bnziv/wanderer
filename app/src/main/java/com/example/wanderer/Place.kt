@@ -23,7 +23,7 @@ data class Place(
     @SerialName("photos")
     val photo: List<Photo>? = null,
     @SerialName("vicinity")
-    val address: String? = null
+    val address: String? = ""
 ): java.io.Serializable
 
 @Keep
