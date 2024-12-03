@@ -15,7 +15,7 @@ plugins {
 
 android {
     namespace = "com.example.wanderer"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.wanderer"
@@ -59,7 +59,6 @@ dependencies {
     kapt ("androidx.room:room-compiler:2.4.2")
     implementation ("androidx.fragment:fragment-ktx:1.5.0")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.7.10")
-    implementation ("androidx.core:core-ktx:1.8.0")
     implementation ("androidx.appcompat:appcompat:1.4.2")
     implementation ("com.google.android.material:material:1.6.1")
     implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
