@@ -1,8 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Wanderer" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="android:colorBackground">@color/primaryWhite</item>
+        <item name="android:colorBackground">@color/primaryBeige</item>
         <item name="android:textColor">@color/primaryGreen</item>
     </style>
     <style name="Theme.Wanderer" parent="Base.Theme.Wanderer" />
+    <style name="Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/primaryLightGreen</item>
+    </style>
 </resources>

@@ -21,7 +21,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="@color/primaryGreen"
+        app:itemIconTint="@color/primaryBeige"
+        app:itemTextColor="@color/primaryBeige"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/navbar" />
+        app:menu="@menu/navbar"
+        app:itemActiveIndicatorStyle="@style/Indicator"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
