@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Wanderer"
         tools:targetApi="31">
-        <activity android:name=".DetailPlace"
+        <activity android:name=".DetailActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

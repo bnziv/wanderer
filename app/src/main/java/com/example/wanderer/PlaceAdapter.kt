@@ -2,6 +2,7 @@ package com.example.wanderer
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 
 class PlaceAdapter(private val context: Context, private val places: List<Place>) :
     RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
@@ -25,7 +27,7 @@ class PlaceAdapter(private val context: Context, private val places: List<Place>
 
         fun bind(place: Place) {
             nameTv.text = place.name
-            addressTv.text = place.address
+            addressTv.text = if (place.vicinity != "") place.vicinity else place.address
             ratingTv.text = if (place.rating != null) place.rating.toString() else ""
 
             val photoId = place.photo?.get(0)?.photo_id
@@ -34,13 +36,14 @@ class PlaceAdapter(private val context: Context, private val places: List<Place>
                 Glide.with(context)
                     .load(photoUrl)
                     .placeholder(R.drawable.ic_launcher_foreground)
+                    .transform(RoundedCorners(20))
                     .into(thumbnail)
             }
         }
 
         override fun onClick(v: View?) {
             val place = places[absoluteAdapterPosition]
-            val intent = Intent(context, DetailPlace::class.java)
+            val intent = Intent(context, DetailActivity::class.java)
             intent.putExtra("PLACE_EXTRA", place)
             context.startActivity(intent)
         }

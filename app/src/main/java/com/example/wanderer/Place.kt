@@ -23,8 +23,17 @@ data class Place(
     @SerialName("photos")
     val photo: List<Photo>? = null,
     @SerialName("vicinity")
-    val address: String? = ""
-): java.io.Serializable
+    val vicinity: String? = "",
+    @SerialName("formatted_address")
+    val formattedAddress: String? = ""
+): java.io.Serializable {
+    val address: String
+        get() = formattedAddress?.let {
+            val regex = Regex("^(.*),\\s[A-Za-z]{2}\\s[0-9]{5},\\s[A-Za-z\\s]+$")
+            val matchResult = regex.find(it)
+            matchResult?.groups?.get(1)?.value ?: it
+        } ?: ""
+}
 
 @Keep
 @Serializable

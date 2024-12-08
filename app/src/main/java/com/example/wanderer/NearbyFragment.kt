@@ -154,7 +154,7 @@ class NearbyFragment: Fragment() {
                 response: String?,
                 throwable: Throwable?
             ) {
-                Log.e("", "Failed to fetch articles: $statusCode")
+                Log.e("", "Failed to fetch places: $statusCode")
             }
 
             override fun onSuccess(statusCode: Int, headers: Headers, json: JSON) {
