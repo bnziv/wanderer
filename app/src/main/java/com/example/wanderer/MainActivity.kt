@@ -24,7 +24,6 @@ import okhttp3.Headers
 import org.json.JSONException
 
 const val PLACES_KEY = BuildConfig.GOOGLE_PLACES_API_KEY
-const val URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
 
 class MainActivity : AppCompatActivity() {
     private val places = mutableListOf<Place>()
@@ -41,17 +40,19 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         val nearbyFragment: Fragment = NearbyFragment()
+        val searchFragment: Fragment = SearchFragment()
 
         val navbar: BottomNavigationView = findViewById(R.id.navbar)
-        navbar.selectedItemId = R.id.nav_nearby
         navbar.setOnItemSelectedListener { item ->
             lateinit var fragment: Fragment
             when (item.itemId) {
                 R.id.nav_nearby -> fragment = nearbyFragment
+                R.id.nav_search -> fragment = searchFragment
             }
             replaceFragment(fragment)
             true
         }
+        navbar.selectedItemId = R.id.nav_nearby
     }
 
     private fun replaceFragment(fragment: Fragment) {

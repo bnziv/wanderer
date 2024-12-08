@@ -19,6 +19,8 @@ import kotlinx.serialization.json.Json
 import okhttp3.Headers
 import org.json.JSONException
 
+private const val URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
+
 class NearbyFragment: Fragment() {
     private lateinit var adapter: PlaceAdapter
     private val places = mutableListOf<Place>()
