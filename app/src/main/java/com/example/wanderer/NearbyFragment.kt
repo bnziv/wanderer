@@ -1,12 +1,19 @@
 package com.example.wanderer
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ObjectAnimator
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
+import android.widget.Button
+import android.widget.RadioButton
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,12 +31,78 @@ private const val URL = "https://maps.googleapis.com/maps/api/place/nearbysearch
 class NearbyFragment: Fragment() {
     private lateinit var adapter: PlaceAdapter
     private val places = mutableListOf<Place>()
+    private var selectedType: String? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.nearby_fragment, container, false)
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
         adapter = PlaceAdapter(view.context, places)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(view.context)
+
+        val filterButton: Button = view.findViewById(R.id.filterButton)
+        val filterScreen: ConstraintLayout = view.findViewById(R.id.filterScreen)
+
+        filterButton.setOnClickListener {
+            filterScreen.translationY = -filterScreen.height.toFloat()
+            filterScreen.visibility = View.VISIBLE
+            val preDrawListener = object : ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    filterScreen.viewTreeObserver.removeOnPreDrawListener(this)
+
+                    val animator = ObjectAnimator.ofFloat(filterScreen, "translationY", -filterScreen.height.toFloat(), 0f)
+                    animator.duration = 300
+                    animator.start()
+
+                    return true
+                }
+            }
+            filterScreen.viewTreeObserver.addOnPreDrawListener(preDrawListener)
+            filterButton.isEnabled = false
+        }
+
+        val radioGroup = listOf<RadioButton>(
+            view.findViewById(R.id.radio_mall),
+            view.findViewById(R.id.radio_parks),
+            view.findViewById(R.id.radio_tourist),
+            view.findViewById(R.id.radio_amusement),
+            view.findViewById(R.id.radio_restaurants),
+            view.findViewById(R.id.radio_stores)
+        )
+        val typeMap = mapOf(
+            R.id.radio_mall to "shopping_mall",
+            R.id.radio_parks to "park",
+            R.id.radio_tourist to "tourist_attraction",
+            R.id.radio_amusement to "amusement_park",
+            R.id.radio_restaurants to "restaurant",
+            R.id.radio_stores to "store"
+        )
+
+        radioGroup.forEach { button ->
+            button.setOnClickListener {
+                radioGroup.forEach { it.isChecked = false }
+                button.isChecked = true
+                selectedType = typeMap[button.id]
+            }
+        }
+
+        val applyButton: Button = view.findViewById(R.id.applyButton)
+        applyButton.setOnClickListener {
+            hideFilters(filterScreen)
+            filterButton.isEnabled = true
+            fetchLocation()
+        }
+
+        val closeButton: Button = view.findViewById(R.id.closeButton)
+        closeButton.setOnClickListener {
+            hideFilters(filterScreen)
+            filterButton.isEnabled = true
+        }
+
+        val clearButton: Button = view.findViewById(R.id.clearButton)
+        clearButton.setOnClickListener {
+            radioGroup.forEach { it.isChecked = false }
+            selectedType = null
+        }
 
         fetchLocation()
 
@@ -71,6 +144,9 @@ class NearbyFragment: Fragment() {
         params["key"] = PLACES_KEY
         params["location"] = "$latitude,$longitude"
         params["radius"] = "1500"
+        if (selectedType != null) {
+            params["type"] = selectedType
+        }
         client[URL, params, object : JsonHttpResponseHandler() {
             override fun onFailure(
                 statusCode: Int,
@@ -88,6 +164,7 @@ class NearbyFragment: Fragment() {
                         json.jsonObject.toString()
                     )
                     parsed.results?.let { list ->
+                        places.clear()
                         places.addAll(list)
                         adapter.notifyDataSetChanged()
                     }
@@ -106,5 +183,17 @@ class NearbyFragment: Fragment() {
                 Toast.makeText(requireContext(), "Location permission is required to show nearby places", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun hideFilters(view: View) {
+        val slideOut = ObjectAnimator.ofFloat(view, "translationY", 0f, -view.height.toFloat())
+        slideOut.duration = 300
+        slideOut.addListener(object: AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                super.onAnimationEnd(animation)
+                view.visibility = View.GONE
+            }
+        })
+        slideOut.start()
     }
 }

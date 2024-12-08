@@ -40,7 +40,6 @@
 
     <include
         android:id="@+id/filterScreen"
-        layout="@layout/search_filter"
-        android:visibility="gone"/>
+        layout="@layout/search_filter" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
