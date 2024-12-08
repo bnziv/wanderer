@@ -72,7 +72,7 @@ class DetailActivity: AppCompatActivity() {
         nameTv.text = placeDetails.name
         addressTv.text = if (place.vicinity != "") place.vicinity else place.address
 
-        val photo_id = place.photo?.get(0)?.photo_id
+        val photo_id = place.photo?.get(0)?.photoId
         if (photo_id != null) {
             val photoUrl = "https://maps.googleapis.com/maps/api/place/photo?maxheight=600&key=${PLACES_KEY}&photo_reference=${photo_id}"
             Glide.with(this)

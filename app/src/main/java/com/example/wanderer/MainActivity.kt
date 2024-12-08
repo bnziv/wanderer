@@ -26,10 +26,7 @@ import org.json.JSONException
 const val PLACES_KEY = BuildConfig.GOOGLE_PLACES_API_KEY
 
 class MainActivity : AppCompatActivity() {
-    private val places = mutableListOf<Place>()
-    private lateinit var recyclerView: RecyclerView
     private lateinit var binding: ActivityMainBinding
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -15,7 +15,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/placeThumbnail"
-        tools:text="Place Name"/>
+        tools:text="Place Name"
+        android:layout_marginEnd="15dp"/>
 
     <TextView
         android:id="@+id/placeAddress"
@@ -23,14 +24,26 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/placeName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/placeThumbnail" />
+        app:layout_constraintEnd_toStartOf="@id/placeThumbnail"
+        android:layout_marginEnd="15dp"/>
+
     <TextView
         android:id="@+id/placeRating"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/placeAddress"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/placeThumbnail" />
+        app:layout_constraintEnd_toStartOf="@id/placeThumbnail"
+        android:layout_marginEnd="15dp"/>
+
+    <TextView
+        android:id="@+id/placeType"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/placeRating"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/placeThumbnail"
+        android:layout_marginEnd="15dp"/>
 
     <ImageView
         android:id="@+id/placeThumbnail"

@@ -25,7 +25,9 @@ data class Place(
     @SerialName("vicinity")
     val vicinity: String? = "",
     @SerialName("formatted_address")
-    val formattedAddress: String? = ""
+    val formattedAddress: String? = "",
+    @SerialName("types")
+    val types: List<String>?
 ): java.io.Serializable {
     val address: String
         get() = formattedAddress?.let {
@@ -39,5 +41,5 @@ data class Place(
 @Serializable
 data class Photo(
     @SerialName("photo_reference")
-    val photo_id: String?
+    val photoId: String?
 ): java.io.Serializable
