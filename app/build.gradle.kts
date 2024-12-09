@@ -28,6 +28,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "GOOGLE_PLACES_API_KEY", "\"${properties.getProperty("GOOGLE_PLACES_API_KEY")}\"")
+        buildConfigField("String", "WEATHER_API_KEY", "\"${properties.getProperty("WEATHER_API_KEY")}\"")
     }
 
     buildTypes {

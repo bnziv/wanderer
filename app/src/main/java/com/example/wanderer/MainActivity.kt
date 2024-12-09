@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         val searchFragment: Fragment = SearchFragment()
         val bookmarkFragment: Fragment = BookmarkFragment()
         val profileFragment: Fragment = ProfileFragment()
+        val weatherFragment: Fragment = WeatherFragment()
 
         val navbar: BottomNavigationView = findViewById(R.id.navbar)
         navbar.setOnItemSelectedListener { item ->
@@ -43,6 +44,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_search -> fragment = searchFragment
                 R.id.nav_bookmark -> fragment = bookmarkFragment
                 R.id.nav_profile -> fragment = profileFragment
+                R.id.nav_weather -> fragment = weatherFragment
             }
             replaceFragment(fragment)
             true
