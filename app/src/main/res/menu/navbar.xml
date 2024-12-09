@@ -19,4 +19,9 @@
         android:id="@+id/nav_weather"
         android:icon="@drawable/baseline_cloud_24"
         android:title="Weather" />
+
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/baseline_person_24"
+        android:title="Profile" />
 </menu>

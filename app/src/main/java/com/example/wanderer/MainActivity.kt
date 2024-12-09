@@ -14,7 +14,6 @@ const val PLACES_KEY = BuildConfig.GOOGLE_PLACES_API_KEY
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
-    private lateinit var db: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         val nearbyFragment: Fragment = NearbyFragment()
         val searchFragment: Fragment = SearchFragment()
         val bookmarkFragment: Fragment = BookmarkFragment()
+        val profileFragment: Fragment = ProfileFragment()
 
         val navbar: BottomNavigationView = findViewById(R.id.navbar)
         navbar.setOnItemSelectedListener { item ->
@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_nearby -> fragment = nearbyFragment
                 R.id.nav_search -> fragment = searchFragment
                 R.id.nav_bookmark -> fragment = bookmarkFragment
+                R.id.nav_profile -> fragment = profileFragment
             }
             replaceFragment(fragment)
             true
