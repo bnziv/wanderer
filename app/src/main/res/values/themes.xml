@@ -8,4 +8,8 @@
     <style name="Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/primaryLightGreen</item>
     </style>
+    <style name="Button" parent="Widget.Material3.Button">
+        <item name="android:backgroundTint">@color/primaryGreen</item>
+        <item name="android:textColor">@color/primaryBeige</item>
+    </style>
 </resources>

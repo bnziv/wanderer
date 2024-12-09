@@ -13,6 +13,7 @@ import android.view.ViewTreeObserver
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.Toast
@@ -44,7 +45,7 @@ class SearchFragment: Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(view.context)
 
-        val filterButton: Button = view.findViewById(R.id.filterButton)
+        val filterButton: ImageButton = view.findViewById(R.id.filterButton)
         val filterScreen: ConstraintLayout = view.findViewById(R.id.filterScreen)
 
         filterButton.setOnClickListener {

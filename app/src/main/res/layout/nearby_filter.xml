@@ -2,7 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/primaryBeige">
+    android:background="@color/secondaryBeige">
 
     <GridLayout
         android:id="@+id/radioGroup"
@@ -21,46 +21,53 @@
             android:layout_columnWeight="2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Restaurants" />
+            android:text="Restaurants"
+            app:buttonTint="@color/primaryGreen"/>
 
         <RadioButton
             android:id="@+id/radio_parks"
             android:layout_columnWeight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Parks" />
+            android:text="Parks"
+            app:buttonTint="@color/primaryGreen"/>
 
         <RadioButton
             android:id="@+id/radio_amusement"
             android:layout_columnWeight="2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Amusement Parks" />
+            android:text="Amusement Parks"
+            app:buttonTint="@color/primaryGreen"/>
 
         <RadioButton
             android:id="@+id/radio_mall"
             android:layout_width="wrap_content"
             android:layout_columnWeight="1"
             android:layout_height="wrap_content"
-            android:text="Malls" />
+            android:text="Malls"
+            app:buttonTint="@color/primaryGreen"/>
 
         <RadioButton
             android:id="@+id/radio_tourist"
             android:layout_columnWeight="2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tourist Attractions" />
+            android:text="Tourist Attractions"
+            app:buttonTint="@color/primaryGreen"/>
 
         <RadioButton
             android:id="@+id/radio_stores"
             android:layout_columnWeight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Stores" />
+            android:text="Stores"
+            app:buttonTint="@color/primaryGreen"/>
 
     </GridLayout>
 
     <Button
+        style="@style/Button"
         android:id="@+id/applyButton"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
@@ -68,9 +75,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/clearButton"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"/>
 
     <Button
+        style="@style/Button"
         android:id="@+id/clearButton"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
@@ -78,9 +87,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/applyButton"
         app:layout_constraintEnd_toStartOf="@+id/closeButton"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"/>
 
     <Button
+        style="@style/Button"
         android:id="@+id/closeButton"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
@@ -88,6 +99,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/clearButton"
+        android:layout_marginBottom="10dp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

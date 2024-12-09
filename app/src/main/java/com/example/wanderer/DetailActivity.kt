@@ -1,27 +1,45 @@
 package com.example.wanderer
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.CenterInside
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.codepath.asynchttpclient.AsyncHttpClient
 import com.codepath.asynchttpclient.RequestParams
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
 import kotlinx.serialization.json.Json
 import okhttp3.Headers
 import org.json.JSONException
+import org.w3c.dom.Text
 
 private const val URL = "https://maps.googleapis.com/maps/api/place/details/json"
 
 class DetailActivity: AppCompatActivity() {
     private lateinit var nameTv: TextView
     private lateinit var addressTv: TextView
+    private lateinit var hoursTv: TextView
+    private lateinit var overviewTv: TextView
+    private lateinit var phoneTv: TextView
     private lateinit var thumbnail: ImageView
+    private lateinit var googleButton: ImageButton
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: ReviewAdapter
 
     private lateinit var place: Place
     private lateinit var placeDetails: PlaceDetails
+    private var reviews = mutableListOf<Review>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +47,15 @@ class DetailActivity: AppCompatActivity() {
 
         nameTv = findViewById(R.id.placeName)
         addressTv = findViewById(R.id.placeAddress)
+        hoursTv = findViewById(R.id.placeHours)
+        overviewTv = findViewById(R.id.placeOverview)
+        phoneTv = findViewById(R.id.placePhone)
+        googleButton = findViewById(R.id.googleButton)
         thumbnail = findViewById(R.id.placeThumbnail)
+        recyclerView = findViewById(R.id.reviews)
+        adapter = ReviewAdapter(this, reviews)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
 
         place = intent.getSerializableExtra("PLACE_EXTRA") as Place
 
@@ -37,7 +63,6 @@ class DetailActivity: AppCompatActivity() {
         val params = RequestParams()
         params["key"] = PLACES_KEY
         params["place_id"] = place.apiId
-        Log.e("","Calling API $PLACES_KEY ${place.apiId}")
         client[URL, params, object : JsonHttpResponseHandler() {
             override fun onFailure(
                 statusCode: Int,
@@ -50,12 +75,10 @@ class DetailActivity: AppCompatActivity() {
 
             override fun onSuccess(statusCode: Int, headers: Headers, json: JSON) {
                 try {
-                    Log.e("","Success API")
                     val parsed = Json { ignoreUnknownKeys = true }.decodeFromString(
                         Result.serializer(),
                         json.jsonObject.toString()
                     )
-                    Log.e("","Success parsing API")
                     placeDetails = parsed.result
 
                     runOnUiThread {
@@ -71,13 +94,29 @@ class DetailActivity: AppCompatActivity() {
     private fun updateView(place: Place) {
         nameTv.text = placeDetails.name
         addressTv.text = if (place.vicinity != "") place.vicinity else place.address
+        hoursTv.text = placeDetails.opening?.hours?.joinToString("\n")
+        overviewTv.text = placeDetails.summary?.overview
+        phoneTv.text = placeDetails.phoneNum
 
-        val photo_id = place.photo?.get(0)?.photoId
-        if (photo_id != null) {
-            val photoUrl = "https://maps.googleapis.com/maps/api/place/photo?maxheight=600&key=${PLACES_KEY}&photo_reference=${photo_id}"
+        placeDetails.reviews?.let { reviews.addAll(it) }
+        adapter.notifyDataSetChanged()
+
+        val photoId = place.photo?.get(0)?.photoId
+        if (photoId != null) {
+            val photoUrl = "https://maps.googleapis.com/maps/api/place/photo?maxheight=600&key=${PLACES_KEY}&photo_reference=${photoId}"
             Glide.with(this)
                 .load(photoUrl)
+                .transform(CenterInside(), RoundedCorners(20))
                 .into(thumbnail)
         }
+        googleButton.setOnClickListener {
+            try {
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(placeDetails.googleUrl))
+                ContextCompat.startActivity(it.context, browserIntent, null)
+            } catch (e: Exception) {
+                Toast.makeText(it.context, "Error occurred while opening Google URL", Toast.LENGTH_SHORT).show()
+            }
+        }
+
     }
 }

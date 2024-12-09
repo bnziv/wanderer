@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -39,7 +40,7 @@ class NearbyFragment: Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(view.context)
 
-        val filterButton: Button = view.findViewById(R.id.filterButton)
+        val filterButton: ImageButton = view.findViewById(R.id.filterButton)
         val filterScreen: ConstraintLayout = view.findViewById(R.id.filterScreen)
 
         filterButton.setOnClickListener {

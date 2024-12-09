@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="6dp">
+    android:padding="12dp">
 
     <TextView
         android:id="@+id/placeName"
@@ -19,31 +19,81 @@
         tools:text="Place Name"/>
 
     <TextView
-        android:id="@+id/placeDesc"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/placeAddress"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="Place description Place description Place description Place description Place description" />
-
-    <TextView
         android:id="@+id/placeAddress"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAlignment="center"
         app:layout_constraintTop_toBottomOf="@+id/placeName"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/placePhone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@+id/placeAddress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/placeOverview"
+        android:layout_marginTop="10dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@+id/placePhone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/placeHours"
+        android:layout_width="0dp"
+        android:textAlignment="center"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/placeOverview"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/googleButton"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/reviewsTitle"
+        android:layout_width="0dp"
+        android:text="Reviews"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="Place address" />
+        app:layout_constraintBottom_toTopOf="@id/reviews" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/reviews"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.3"/>
 
     <ImageView
         android:id="@+id/placeThumbnail"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleType="fitXY"
+        android:layout_height="0dp"
+        android:scaleType="centerInside"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHeight_percent="0.25"/>
+
+    <ImageButton
+        android:id="@+id/googleButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/google_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/reviewsTitle"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="25dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

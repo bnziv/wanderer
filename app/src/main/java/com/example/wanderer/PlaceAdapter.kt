@@ -41,7 +41,7 @@ class PlaceAdapter(private val context: Context, private val places: List<Place>
         fun bind(place: Place) {
             nameTv.text = place.name
             addressTv.text = if (place.vicinity != "") place.vicinity else place.address
-            ratingTv.text = if (place.rating != null) place.rating.toString() else ""
+            ratingTv.text = if (place.rating != null) "${place.rating}/5"  else ""
 
             val typeString = place.types?.filter { it in notableTypes.keys }?.joinToString(" - ") { notableTypes[it].toString() }
             typesTv.text = typeString
