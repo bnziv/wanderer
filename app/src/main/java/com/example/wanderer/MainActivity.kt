@@ -1,35 +1,20 @@
 package com.example.wanderer
 
-import android.Manifest
-import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.codepath.asynchttpclient.AsyncHttpClient
-import com.codepath.asynchttpclient.RequestParams
-import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
 import com.example.wanderer.databinding.ActivityMainBinding
-import com.google.android.gms.location.LocationServices
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.serialization.json.Json
-import okhttp3.Headers
-import org.json.JSONException
+import com.google.firebase.firestore.FirebaseFirestore
 
 const val PLACES_KEY = BuildConfig.GOOGLE_PLACES_API_KEY
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         val nearbyFragment: Fragment = NearbyFragment()
         val searchFragment: Fragment = SearchFragment()
-        val favoriteFragment: Fragment = FavoriteFragment()
+        val bookmarkFragment: Fragment = BookmarkFragment()
 
         val navbar: BottomNavigationView = findViewById(R.id.navbar)
         navbar.setOnItemSelectedListener { item ->
@@ -56,12 +41,12 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_nearby -> fragment = nearbyFragment
                 R.id.nav_search -> fragment = searchFragment
-                R.id.nav_favorite -> fragment = favoriteFragment
+                R.id.nav_bookmark -> fragment = bookmarkFragment
             }
             replaceFragment(fragment)
             true
         }
-        navbar.selectedItemId = R.id.nav_favorite
+        navbar.selectedItemId = R.id.nav_nearby
     }
 
     private fun replaceFragment(fragment: Fragment) {

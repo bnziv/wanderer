@@ -56,6 +56,7 @@ android {
 dependencies {
     implementation("com.google.firebase:firebase-auth:21.0.6")
     implementation("com.google.firebase:firebase-firestore:24.0.1")
+    implementation ("com.google.android.gms:play-services-auth:20.3.0")
     implementation ("androidx.room:room-ktx:2.4.2")
     implementation ("androidx.room:room-runtime:2.4.2")
     implementation(libs.play.services.location)

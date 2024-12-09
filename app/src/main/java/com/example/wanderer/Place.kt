@@ -15,7 +15,7 @@ data class Results(
 @Serializable
 data class Place(
     @SerialName("place_id")
-    val apiId: String?,
+    val apiId: String,
     @SerialName("name")
     val name: String?,
     @SerialName("rating")

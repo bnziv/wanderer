@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -32,6 +33,7 @@ class DetailActivity: AppCompatActivity() {
     private lateinit var hoursTv: TextView
     private lateinit var overviewTv: TextView
     private lateinit var phoneTv: TextView
+    private lateinit var emptyTv: TextView
     private lateinit var thumbnail: ImageView
     private lateinit var googleButton: ImageButton
     private lateinit var recyclerView: RecyclerView
@@ -50,6 +52,7 @@ class DetailActivity: AppCompatActivity() {
         hoursTv = findViewById(R.id.placeHours)
         overviewTv = findViewById(R.id.placeOverview)
         phoneTv = findViewById(R.id.placePhone)
+        emptyTv = findViewById(R.id.empty)
         googleButton = findViewById(R.id.googleButton)
         thumbnail = findViewById(R.id.placeThumbnail)
         recyclerView = findViewById(R.id.reviews)
@@ -108,8 +111,14 @@ class DetailActivity: AppCompatActivity() {
             overviewTv.text = details.summary?.overview
             phoneTv.text = details.phoneNum
 
-            details.reviews?.let { reviews.addAll(it) }
-            adapter.notifyDataSetChanged()
+            if (details.reviews?.isNotEmpty() == true) {
+                details.reviews.let { reviews.addAll(it) }
+                adapter.notifyDataSetChanged()
+            } else {
+                emptyTv.visibility = View.VISIBLE
+            }
+
+
 
             val photoId = details.photos?.get(0)?.photoId
             if (photoId != null) {

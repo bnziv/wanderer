@@ -1,5 +1,6 @@
 package com.example.wanderer
 
+import BookmarksObj
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,31 +12,46 @@ import androidx.recyclerview.widget.RecyclerView
 import com.codepath.asynchttpclient.AsyncHttpClient
 import com.codepath.asynchttpclient.RequestParams
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.serialization.json.Json
 import okhttp3.Headers
 import org.json.JSONException
 
 private const val URL = "https://maps.googleapis.com/maps/api/place/details/json"
 
-class FavoriteFragment: Fragment() {
+class BookmarkFragment: Fragment() {
     private lateinit var adapter: PlaceAdapter
     private val places = mutableListOf<Place>()
     private val placesDetails = mutableMapOf<String, PlaceDetails>()
-    private val favoriteIds = listOf<String>()
+    private val bookmarks = BookmarksObj.getBookmarks()
+
+    private val firestore = FirebaseFirestore.getInstance()
+    private val userId = FirebaseAuth.getInstance().currentUser?.uid
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.favorite_fragment, container, false)
+        val view = inflater.inflate(R.layout.bookmark_fragment, container, false)
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
         adapter = PlaceAdapter(view.context, places, placesDetails)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(view.context)
 
+        lateinit var document: DocumentReference
+        if (userId != null) {
+            document = firestore.collection("users").document(userId)
+            document.get().addOnSuccessListener { documentSnapshot ->
+                val firestorebookmarks =
+                    documentSnapshot.get("bookmarks") as? MutableList<String> ?: mutableListOf()
+                BookmarksObj.setBookmarks(firestorebookmarks)
+            }
+        }
         loadPlaces()
         return view
     }
 
     private fun loadPlaces() {
-        for (id in favoriteIds) {
+        for (id in BookmarksObj.getBookmarks()) {
             val client = AsyncHttpClient()
             val params = RequestParams()
             params["key"] = PLACES_KEY
