@@ -38,7 +38,7 @@ class DetailActivity: AppCompatActivity() {
     private lateinit var adapter: ReviewAdapter
 
     private lateinit var place: Place
-    private lateinit var placeDetails: PlaceDetails
+    private var placeDetails: PlaceDetails? = null
     private var reviews = mutableListOf<Review>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +58,16 @@ class DetailActivity: AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         place = intent.getSerializableExtra("PLACE_EXTRA") as Place
+        placeDetails = intent.getSerializableExtra("PLACE_DETAILS_EXTRA") as? PlaceDetails
 
+        if (placeDetails != null) {
+            updateView()
+        } else {
+            fetchDetails()
+        }
+    }
+
+    private fun fetchDetails() {
         val client = AsyncHttpClient()
         val params = RequestParams()
         params["key"] = PLACES_KEY
@@ -82,7 +91,7 @@ class DetailActivity: AppCompatActivity() {
                     placeDetails = parsed.result
 
                     runOnUiThread {
-                        updateView(place)
+                        updateView()
                     }
                 } catch (e: JSONException) {
                     Log.e("", "Exception: ${e}")
@@ -91,32 +100,33 @@ class DetailActivity: AppCompatActivity() {
         }]
     }
 
-    private fun updateView(place: Place) {
-        nameTv.text = placeDetails.name
-        addressTv.text = if (place.vicinity != "") place.vicinity else place.address
-        hoursTv.text = placeDetails.opening?.hours?.joinToString("\n")
-        overviewTv.text = placeDetails.summary?.overview
-        phoneTv.text = placeDetails.phoneNum
+    private fun updateView() {
+        placeDetails?.let { details ->
+            nameTv.text = details.name
+            addressTv.text = details.address
+            hoursTv.text = details.opening?.hours?.joinToString("\n")
+            overviewTv.text = details.summary?.overview
+            phoneTv.text = details.phoneNum
 
-        placeDetails.reviews?.let { reviews.addAll(it) }
-        adapter.notifyDataSetChanged()
+            details.reviews?.let { reviews.addAll(it) }
+            adapter.notifyDataSetChanged()
 
-        val photoId = place.photo?.get(0)?.photoId
-        if (photoId != null) {
-            val photoUrl = "https://maps.googleapis.com/maps/api/place/photo?maxheight=600&key=${PLACES_KEY}&photo_reference=${photoId}"
-            Glide.with(this)
-                .load(photoUrl)
-                .transform(CenterInside(), RoundedCorners(20))
-                .into(thumbnail)
-        }
-        googleButton.setOnClickListener {
-            try {
-                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(placeDetails.googleUrl))
-                ContextCompat.startActivity(it.context, browserIntent, null)
-            } catch (e: Exception) {
-                Toast.makeText(it.context, "Error occurred while opening Google URL", Toast.LENGTH_SHORT).show()
+            val photoId = details.photos?.get(0)?.photoId
+            if (photoId != null) {
+                val photoUrl = "https://maps.googleapis.com/maps/api/place/photo?maxheight=600&key=${PLACES_KEY}&photo_reference=${photoId}"
+                Glide.with(this)
+                    .load(photoUrl)
+                    .transform(CenterInside(), RoundedCorners(20))
+                    .into(thumbnail)
+            }
+            googleButton.setOnClickListener {
+                try {
+                    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(details.googleUrl))
+                    startActivity(browserIntent)
+                } catch (e: Exception) {
+                    Toast.makeText(this, "Error occurred while opening Google URL", Toast.LENGTH_SHORT).show()
+                }
             }
         }
-
     }
 }

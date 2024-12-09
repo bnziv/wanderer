@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity() {
 
         val nearbyFragment: Fragment = NearbyFragment()
         val searchFragment: Fragment = SearchFragment()
+        val favoriteFragment: Fragment = FavoriteFragment()
 
         val navbar: BottomNavigationView = findViewById(R.id.navbar)
         navbar.setOnItemSelectedListener { item ->
@@ -55,11 +56,12 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_nearby -> fragment = nearbyFragment
                 R.id.nav_search -> fragment = searchFragment
+                R.id.nav_favorite -> fragment = favoriteFragment
             }
             replaceFragment(fragment)
             true
         }
-        navbar.selectedItemId = R.id.nav_nearby
+        navbar.selectedItemId = R.id.nav_favorite
     }
 
     private fun replaceFragment(fragment: Fragment) {

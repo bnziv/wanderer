@@ -36,7 +36,7 @@ class NearbyFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.nearby_fragment, container, false)
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
-        adapter = PlaceAdapter(view.context, places)
+        adapter = PlaceAdapter(view.context, places, null)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(view.context)
 

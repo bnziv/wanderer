@@ -2,6 +2,7 @@ package com.example.wanderer
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 
-class PlaceAdapter(private val context: Context, private val places: List<Place>) :
+class PlaceAdapter(private val context: Context, private val places: List<Place>, private val placeDetailsMap: Map<String, PlaceDetails>?) :
     RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
 
     private val notableTypes = mapOf(
@@ -40,7 +41,7 @@ class PlaceAdapter(private val context: Context, private val places: List<Place>
 
         fun bind(place: Place) {
             nameTv.text = place.name
-            addressTv.text = if (place.vicinity != "") place.vicinity else place.address
+            addressTv.text = place.address
             ratingTv.text = if (place.rating != null) "${place.rating}/5"  else ""
 
             val typeString = place.types?.filter { it in notableTypes.keys }?.joinToString(" - ") { notableTypes[it].toString() }
@@ -48,7 +49,7 @@ class PlaceAdapter(private val context: Context, private val places: List<Place>
 
             val photoId = place.photo?.get(0)?.photoId
             if (photoId != null) {
-                val photoUrl = "https://maps.googleapis.com/maps/api/place/photo?maxheight=200&key=${PLACES_KEY}&photo_reference=${photoId}"
+                val photoUrl = "https://maps.googleapis.com/maps/api/place/photo?maxheight=170&key=${PLACES_KEY}&photo_reference=${photoId}"
                 Glide.with(context)
                     .load(photoUrl)
                     .placeholder(R.drawable.ic_launcher_foreground)
@@ -59,8 +60,13 @@ class PlaceAdapter(private val context: Context, private val places: List<Place>
 
         override fun onClick(v: View?) {
             val place = places[absoluteAdapterPosition]
-            val intent = Intent(context, DetailActivity::class.java)
-            intent.putExtra("PLACE_EXTRA", place)
+            val placeDetails = placeDetailsMap?.get(place.apiId)
+            val intent = Intent(context, DetailActivity::class.java). apply {
+                putExtra("PLACE_EXTRA", place)
+                placeDetails?.let {
+                    putExtra("PLACE_DETAILS_EXTRA", it)
+                }
+            }
             context.startActivity(intent)
         }
     }

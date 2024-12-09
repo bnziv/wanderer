@@ -27,8 +27,17 @@ data class PlaceDetails (
     @SerialName("opening_hours")
     val opening: Opening? = null,
     @SerialName("editorial_summary")
-    val summary: Summary? = null
-): java.io.Serializable
+    val summary: Summary? = null,
+    @SerialName("photos")
+    val photos: List<Photo>? = null,
+    @SerialName("types")
+    val types: List<String>? = null,
+    @SerialName("rating")
+    val rating: Double? = null
+): java.io.Serializable {
+    val firstPhoto: Photo?
+        get() = photos?.firstOrNull()
+}
 
 @Keep
 @Serializable
