@@ -11,6 +11,7 @@ plugins {
     id("kotlin-parcelize")
     id("org.jetbrains.kotlin.plugin.serialization")
     id("kotlin-kapt")
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -53,6 +54,7 @@ android {
 }
 
 dependencies {
+    implementation("com.google.firebase:firebase-auth:21.0.6")
     implementation ("androidx.room:room-ktx:2.4.2")
     implementation ("androidx.room:room-runtime:2.4.2")
     implementation(libs.play.services.location)
