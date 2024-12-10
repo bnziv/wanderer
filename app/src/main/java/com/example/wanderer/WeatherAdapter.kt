@@ -9,9 +9,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
 import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 class WeatherAdapter(private val context: Context, private val days: List<Weather>) :
     RecyclerView.Adapter<WeatherAdapter.ViewHolder>() {
@@ -25,12 +27,13 @@ class WeatherAdapter(private val context: Context, private val days: List<Weathe
         private var windTv: TextView = itemView.findViewById(R.id.weatherWindSpeed)
 
         fun bind(day: Weather) {
-            dateTv.text = day.date
             descriptionTv.text = day.weatherType[0].formatDesc
             temperatureTv.text = "${day.weatherComponents.temp} F"
             humidityTv.text = "Humidity: ${day.weatherComponents.humidity}%"
             windTv.text = "Wind: ${day.windComponents.speed} mp/h"
 
+            val date = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(day.date)
+            dateTv.text = SimpleDateFormat("MM/dd hh:mm a").format(date)
             //Using hosted image URLs since API URLs don't load with Glide
             val url = "https://rodrigokamada.github.io/openweathermap/images/${day.weatherType[0].imgIcon}_t@4x.png"
             Glide.with(context)

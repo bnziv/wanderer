@@ -1,105 +1,113 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/secondaryBeige">
+    android:elevation="12dp"
+    app:cardCornerRadius="16dp">
 
-    <GridLayout
-        android:id="@+id/radioGroup"
-        android:layout_width="0dp"
-        app:layout_constraintWidth_percent="0.8"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnCount="2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/applyButton"
-        android:useDefaultMargins="true">
+        android:background="@color/secondaryBeige">
 
-        <RadioButton
-            android:id="@+id/radio_restaurants"
-            android:layout_columnWeight="2"
+        <GridLayout
+            android:layout_marginTop="25dp"
+            android:id="@+id/radioGroup"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.8"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:useDefaultMargins="true">
+
+            <RadioButton
+                android:id="@+id/radio_restaurants"
+                android:layout_columnWeight="2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Restaurants"
+                app:buttonTint="@color/primaryGreen"/>
+
+            <RadioButton
+                android:id="@+id/radio_parks"
+                android:layout_columnWeight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Parks"
+                app:buttonTint="@color/primaryGreen"/>
+
+            <RadioButton
+                android:id="@+id/radio_amusement"
+                android:layout_columnWeight="2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Amusement Parks"
+                app:buttonTint="@color/primaryGreen"/>
+
+            <RadioButton
+                android:id="@+id/radio_mall"
+                android:layout_width="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_height="wrap_content"
+                android:text="Malls"
+                app:buttonTint="@color/primaryGreen"/>
+
+            <RadioButton
+                android:id="@+id/radio_tourist"
+                android:layout_columnWeight="2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tourist Attractions"
+                app:buttonTint="@color/primaryGreen"/>
+
+            <RadioButton
+                android:id="@+id/radio_stores"
+                android:layout_columnWeight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Stores"
+                app:buttonTint="@color/primaryGreen"/>
+
+        </GridLayout>
+
+        <EditText
+            android:id="@+id/location_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Restaurants"
-            app:buttonTint="@color/primaryGreen"/>
+            android:hint="Location (city/postal code)"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/radioGroup"
+            android:layout_marginTop="10dp"/>
 
-        <RadioButton
-            android:id="@+id/radio_parks"
-            android:layout_columnWeight="1"
-            android:layout_width="wrap_content"
+
+        <Button
+            style="@style/Button"
+            android:id="@+id/applyButton"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="Parks"
-            app:buttonTint="@color/primaryGreen"/>
+            android:text="Apply"
+            app:layout_constraintTop_toBottomOf="@id/location_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/closeButton"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
 
-        <RadioButton
-            android:id="@+id/radio_amusement"
-            android:layout_columnWeight="2"
-            android:layout_width="wrap_content"
+        <Button
+            style="@style/Button"
+            android:id="@+id/closeButton"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="Amusement Parks"
-            app:buttonTint="@color/primaryGreen"/>
+            android:text="Close"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/applyButton"
+            android:layout_marginBottom="10dp"
+            />
 
-        <RadioButton
-            android:id="@+id/radio_mall"
-            android:layout_width="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_height="wrap_content"
-            android:text="Malls"
-            app:buttonTint="@color/primaryGreen"/>
-
-        <RadioButton
-            android:id="@+id/radio_tourist"
-            android:layout_columnWeight="2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tourist Attractions"
-            app:buttonTint="@color/primaryGreen"/>
-
-        <RadioButton
-            android:id="@+id/radio_stores"
-            android:layout_columnWeight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Stores"
-            app:buttonTint="@color/primaryGreen"/>
-
-    </GridLayout>
-
-    <EditText
-        android:id="@+id/location_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Location (city/postal code)"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/radioGroup"
-        android:layout_marginTop="10dp"/>
-
-
-    <Button
-        style="@style/Button"
-        android:id="@+id/applyButton"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="Apply"
-        app:layout_constraintTop_toBottomOf="@id/location_text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/closeButton"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
-
-    <Button
-        style="@style/Button"
-        android:id="@+id/closeButton"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="Close"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/applyButton"
-        android:layout_marginBottom="10dp"
-        />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

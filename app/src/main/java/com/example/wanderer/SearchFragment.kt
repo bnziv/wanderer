@@ -14,6 +14,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,7 +41,7 @@ class SearchFragment: Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(view.context)
 
         val filterButton: ImageButton = view.findViewById(R.id.filterButton)
-        val filterScreen: ConstraintLayout = view.findViewById(R.id.filterScreen)
+        val filterScreen: CardView = view.findViewById(R.id.filterScreen)
 
         filterButton.setOnClickListener {
             filterScreen.translationY = -filterScreen.height.toFloat()
