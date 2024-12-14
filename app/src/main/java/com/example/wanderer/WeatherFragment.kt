@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -25,6 +26,9 @@ private const val WEATHER_KEY = BuildConfig.WEATHER_API_KEY
 class WeatherFragment: Fragment() {
     private lateinit var adapter: WeatherAdapter
     private var weatherDays = mutableListOf<Weather>()
+    private lateinit var cityTv: TextView
+    private lateinit var sunriseTv: TextView
+    private lateinit var sunsetTv: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.weather_fragment, container, false)
@@ -32,6 +36,10 @@ class WeatherFragment: Fragment() {
         adapter = WeatherAdapter(view.context, weatherDays)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(view.context)
+
+        cityTv = view.findViewById(R.id.city)
+        sunriseTv = view.findViewById(R.id.sunrise)
+        sunsetTv = view.findViewById(R.id.sunset)
 
         fetchLocation()
         return view
@@ -92,6 +100,11 @@ class WeatherFragment: Fragment() {
                     weatherDays.clear()
                     weatherDays.addAll(parsed.results)
                     adapter.notifyDataSetChanged()
+
+                    cityTv.text = parsed.city.name
+                    sunriseTv.text = "Sunrise: ${parsed.city.sunriseTime}"
+                    sunsetTv.text = "Sunset: ${parsed.city.sunsetTime}"
+
                     Log.e("","$weatherDays")
                 } catch (e: JSONException) {
                     Log.e("", "Exception: ${e}")

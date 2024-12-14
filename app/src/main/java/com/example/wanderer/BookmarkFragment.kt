@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +24,7 @@ private const val URL = "https://maps.googleapis.com/maps/api/place/details/json
 
 class BookmarkFragment: Fragment() {
     private lateinit var adapter: PlaceAdapter
+    private lateinit var emptyTv: TextView
     private val places = mutableListOf<Place>()
     private val placesDetails = mutableMapOf<String, PlaceDetails>()
     private val bookmarks = BookmarksObj.getBookmarks()
@@ -36,6 +38,7 @@ class BookmarkFragment: Fragment() {
         adapter = PlaceAdapter(view.context, places, placesDetails)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(view.context)
+        emptyTv = view.findViewById(R.id.empty)
 
         lateinit var document: DocumentReference
         if (userId != null) {
@@ -51,6 +54,10 @@ class BookmarkFragment: Fragment() {
     }
 
     private fun loadPlaces() {
+        if (BookmarksObj.getBookmarks().isEmpty()) {
+            emptyTv.visibility = View.VISIBLE
+            return
+        }
         for (id in BookmarksObj.getBookmarks()) {
             val client = AsyncHttpClient()
             val params = RequestParams()

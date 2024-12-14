@@ -3,12 +3,18 @@ package com.example.wanderer
 import androidx.annotation.Keep
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 
 @Keep
 @Serializable
 data class WeatherResults(
     @SerialName("list")
-    val results: List<Weather>
+    val results: List<Weather>,
+    @SerialName("city")
+    val city: City
 )
 
 @Keep
@@ -51,3 +57,26 @@ data class WindComponents (
     @SerialName("speed")
     val speed: Double
 )
+
+@Keep
+@Serializable
+data class City (
+    @SerialName("name")
+    val name: String,
+    @SerialName("sunrise")
+    val sunrise: Long,
+    @SerialName("sunset")
+    val sunset: Long
+) {
+    val sunriseTime: String
+        get() = epochTime(sunrise)
+    val sunsetTime: String
+        get() = epochTime(sunset)
+
+    private fun epochTime(epoch: Long): String {
+        val date = Date(epoch * 1000)
+        val formatter = SimpleDateFormat("hh:mm a", Locale.getDefault())
+        formatter.timeZone = TimeZone.getDefault()
+        return formatter.format(date)
+    }
+}
