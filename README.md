@@ -1,6 +1,6 @@
 # Wanderer
 
-Wanderer is an Android app designed to help users explore nearby places or search for specific locations by area. With  features like filtering by place type, viewing detailed information, and bookmarking favorite spots, Wanderer makes traveling or simply exploring easier and more convenient. The app also provides local weather information using the OpenWeatherMap API and enables account management with Google Firestore.
+Wanderer is an Android app designed to help users explore nearby places or search for specific locations by area. With  features like filtering by place type, viewing detailed information, and bookmarking favorite spots, Wanderer makes traveling or simply exploring easier and more convenient. The app provides information on nearby places using the Google Places API and local weather information using the OpenWeatherMap API and enables account management with Google Firestore.
 
 
 ## Features
